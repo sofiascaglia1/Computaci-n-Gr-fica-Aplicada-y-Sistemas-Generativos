@@ -3,14 +3,8 @@ class Linea {
     this.inicio = createVector(random(width), random(height));
     this.angulo = radians(random(25, 55) + random(-15, 15));
     this.longitud = random(300, 900);
-    this.color = random([
-      "#FFD84D",
-      "#FFB84D",
-      "#FF8A4D",
-      "#FF5E7E",
-      "#FF3EA5",
-      "#6A4CFF"
-      ]);
+    this.color =
+random(obraActual.lineas);
 
     this.tiempo = 0;
     this.brillo = random() < 0.25;
@@ -26,23 +20,64 @@ class Linea {
       ]);
 
     this.semilla = random(1000);
-    this.velocidad = random(0.005, 0.015);
+    this.velocidad = random(0.02, 0.05);
     this.amplitudBase = random(50, 200);
     this.amplitudAnimada = this.amplitudBase;
-
+this.factorSilbido = 0;
     this.progreso = 0;
   }
 
-  actualizar() {
-    if (this.progreso < 1) {
-      this.progreso += 0.03;
-    }
+ actualizar() {
 
-    if (silbido && this.tipoCurva == "serpiente") {
-      this.tiempo += this.velocidad;
-      this.amplitudAnimada = map(sin(this.tiempo + this.semilla), -1, 1, this.amplitudBase * 0.7, this.amplitudBase * 1.3);
-    }
+  if (this.progreso < 1) {
+    this.progreso += 0.03;
   }
+
+  if (silbido) {
+
+    this.factorSilbido = lerp(
+      this.factorSilbido,
+      1,
+      0.03
+    );
+
+  } else {
+
+    this.factorSilbido = lerp(
+      this.factorSilbido,
+      0,
+      0.15
+    );
+
+  }
+
+  if (this.tipoCurva == "serpiente") {
+
+    this.tiempo +=
+      this.velocidad *
+      this.factorSilbido;
+
+    let onda = map(
+  sin(this.tiempo + this.semilla),
+  -1,
+  1,
+  this.amplitudBase * 0.7,
+  this.amplitudBase * 1.3
+);
+
+if (silbido) {
+
+  this.amplitudAnimada = lerp(
+    this.amplitudAnimada,
+    onda,
+    0.03
+  );
+
+}
+
+  }
+
+}
 
   redistribuir() {
 

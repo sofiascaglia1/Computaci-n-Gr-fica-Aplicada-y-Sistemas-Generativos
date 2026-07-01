@@ -1,8 +1,36 @@
 class Linea {
   constructor() {
-    this.inicio = createVector(random(width), random(height));
-    this.angulo = radians(random(25, 55) + random(-15, 15));
-    this.longitud = random(300, 900);
+
+  this.angulo =
+    radians(random(25, 55) + random(-15, 15));
+
+  this.longitud =
+    random(300, 900);
+
+  let encontrado = false;
+  while (!encontrado) {
+    let x = random(width);
+    let y = random(height);
+    let finX =
+      x +
+      cos(this.angulo) *
+      this.longitud;
+    let finY =
+      y +
+      sin(this.angulo) *
+      this.longitud;
+    if (
+      finX >= 0 &&
+      finX <= width &&
+      finY >= 0 &&
+      finY <= height
+    ) {
+
+      this.inicio =
+        createVector(x, y);
+      encontrado = true;
+    }
+  }
     this.color =
 random(obraActual.lineas);
 
@@ -72,11 +100,8 @@ if (silbido) {
     onda,
     0.03
   );
-
 }
-
   }
-
 }
 
   redistribuir() {

@@ -110,8 +110,8 @@ aplausoDetectado = false;
 
 if (
   !hayPitch &&
-  empezoSonido &&
-  intensidad > 0.025 &&
+  terminoSonido &&
+  //intensidad > 0.025 &&
   durSonido < 400
 ){
 
